@@ -1,2 +1,5 @@
 venv/
 .vscode/
+__pycache__/
+football_reminder/db.sqlite
+
