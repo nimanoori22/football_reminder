@@ -8,7 +8,7 @@ from scraper.match_scraper import (
 
 from football_reminder import db
 from football_reminder.time_manage import TimeManage
-from utilities.utility import getFromdb
+from utilities.utility import getFromdb, teams_separator
 
 from football_reminder.models import Match
 
@@ -30,6 +30,7 @@ mydict = mymake.maker()
 
 
 ss = mydict
+
 names = getFromdb(Match, 'teams')
 
 for key, value in ss.items():
@@ -38,8 +39,11 @@ for key, value in ss.items():
     else:
         matchTime = TimeManage(value['day'], value['time'])
         startandend = matchTime.gregorian_start_end()
+        separated_teams = teams_separator(value['name'])
         game = Match(
             teams = value['name'],
+            host = separated_teams[0],
+            guest = separated_teams[1],
             day = value['day'],
             match_datetime_start = startandend[0],
             match_datetime_end = startandend[1],

@@ -7,3 +7,6 @@ def getFromdb(model, column):
     mylist = query.all()
 
     return ([getattr(obj, column) for obj in mylist])
+
+def teams_separator(teams):
+    return [item.strip() for item in teams.split('-')]
