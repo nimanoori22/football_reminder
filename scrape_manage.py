@@ -33,23 +33,26 @@ ss = mydict
 
 names = getFromdb(Match, 'teams')
 
-for key, value in ss.items():
-    if value['name'] in names:
-        continue
-    else:
-        matchTime = TimeManage(value['day'], value['time'])
-        startandend = matchTime.gregorian_start_end()
-        separated_teams = teams_separator(value['name'])
-        game = Match(
-            teams = value['name'],
-            host = separated_teams[0],
-            guest = separated_teams[1],
-            day = value['day'],
-            match_datetime_start = startandend[0],
-            match_datetime_end = startandend[1],
-            channel = value['channel'],
-            league = value['league'],
-            time = value['time']
-        )
-        db.session.add(game)
+try:
+    for key, value in ss.items():
+        if value['name'] in names:
+            continue
+        else:
+            matchTime = TimeManage(value['day'], value['time'])
+            startandend = matchTime.gregorian_start_end()
+            separated_teams = teams_separator(value['name'])
+            game = Match(
+                teams = value['name'],
+                host = separated_teams[0],
+                guest = separated_teams[1],
+                day = value['day'],
+                match_datetime_start = startandend[0],
+                match_datetime_end = startandend[1],
+                channel = value['channel'],
+                league = value['league'],
+                time = value['time']
+            )
+            db.session.add(game)
+except AttributeError:
+    pass
 db.session.commit()

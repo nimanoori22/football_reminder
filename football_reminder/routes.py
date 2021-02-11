@@ -9,6 +9,8 @@ def get_matches():
     for match in all_matches:
         mydict = {}
         mydict['name'] = match.teams
+        mydict['host'] = match.host
+        mydict['guest'] = match.guest
         mydict['day'] = match.day
         mydict['channel'] = match.channel
         mydict['league'] = match.league
