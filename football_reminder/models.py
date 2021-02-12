@@ -16,5 +16,21 @@ class Match(db.Model):
     def __repr__(self):
         return self.teams
 
+team_league = db.Table('team_league',
+    db.Column('team_id', db.Integer, db.ForeignKey('team.id'), primary_key=True),
+    db.Column('league_id', db.Integer, db.ForeignKey('league.id'), primary_key=True)
+)
+
+class Team(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+
+class League(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True, nullable=False)
+    teams = db.relationship('Team', secondary=team_league, lazy='subquery', backref=db.backref('leagues', lazy=True))
+
 
 
